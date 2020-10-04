@@ -12,7 +12,7 @@ target_include_directories(winapi_utf8 PUBLIC include/)
 install(TARGETS winapi_utf8 ARCHIVE DESTINATION lib)
 install(DIRECTORY include/winapi DESTINATION include)
 
-if(WINAPI_UTF8_ENABLE_TESTS)
+if(WINAPI_UTF8_TESTS)
     add_subdirectory(test)
 endif()
 

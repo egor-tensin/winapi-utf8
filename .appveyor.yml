@@ -33,7 +33,7 @@ build_script:
     "%python_exe%" -m project.ci.appveyor.cmake
     --install "%install_dir%"
     --boost "%appveyor_boost_root%"
-    -- -D WINAPI_UTF8_ENABLE_TESTS=ON
+    -- -D WINAPI_UTF8_TESTS=ON
 
 after_build:
   - 7z.exe a "%APPVEYOR_PROJECT_NAME%-%PLATFORM%-%CONFIGURATION%.zip" "%install_dir%"
@@ -61,8 +61,8 @@ for:
     - >-
       "%python_exe%" -m project.ci.appveyor.cmake
       --install "%install_dir%"
-      --boost C:\Projects\boost
-      -- -D WINAPI_UTF8_ENABLE_TESTS=ON
+      --boost C:\projects\boost
+      -- -D WINAPI_UTF8_TESTS=ON
 
 - matrix:
     only:
