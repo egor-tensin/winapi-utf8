@@ -5,10 +5,12 @@
 
 #include <winapi/utf8.hpp>
 
+// clang-format off
 #include <boost/format.hpp>
-#include <boost/test/data/monomorphic.hpp>
-#include <boost/test/data/test_case.hpp>
 #include <boost/test/unit_test.hpp>
+#include <boost/test/data/test_case.hpp>
+#include <boost/test/data/monomorphic.hpp>
+// clang-format on
 
 #include <ostream>
 #include <string>
