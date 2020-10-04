@@ -21,6 +21,11 @@ configuration:
 matrix:
   fast_finish: true
 
+  # On Win32, only build Debug to speed things up:
+  exclude:
+    - platform: Win32
+      configuration: RelWithDebInfo
+
 install:
   - git submodule update --init --recursive
 
@@ -43,7 +48,7 @@ test_script:
   - '"%install_dir%\bin\winapi-utf8-unit-tests.exe"'
 
 for:
-# Only build Release builds on master to speed things up:
+# Build Release on master only to speed things up:
 - branches:
     except:
       - master
