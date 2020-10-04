@@ -27,7 +27,7 @@ ostream& operator<<(ostream& os, const vector<unsigned char>& cs) {
     return os;
 }
 
-}
+} // namespace std
 
 namespace {
 
@@ -56,24 +56,18 @@ std::vector<std::vector<unsigned char>> utf8 = {
     from({0xd0, 0x9f, 0xd1, 0x80, 0xd0, 0xb8, 0xd0, 0xb2, 0xd0, 0xb5, 0xd1, 0x82}),
 };
 
-}
+} // namespace
 
 BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<unsigned char>);
 
 BOOST_AUTO_TEST_SUITE(convert_tests)
 
-BOOST_DATA_TEST_CASE(test_narrow,
-                     boost::unit_test::data::make(utf16) ^ utf8,
-                     input,
-                     expected) {
+BOOST_DATA_TEST_CASE(test_narrow, boost::unit_test::data::make(utf16) ^ utf8, input, expected) {
     auto actual = from(winapi::narrow(input));
     BOOST_TEST(actual == expected, "Expected: " << expected << ", actual: " << actual);
 }
 
-BOOST_DATA_TEST_CASE(test_widen,
-                     boost::unit_test::data::make(utf8) ^ utf16,
-                     input,
-                     expected) {
+BOOST_DATA_TEST_CASE(test_widen, boost::unit_test::data::make(utf8) ^ utf16, input, expected) {
     auto actual = from(winapi::widen(input));
     BOOST_TEST(actual == expected, "Expected: " << expected << ", actual: " << actual);
 }

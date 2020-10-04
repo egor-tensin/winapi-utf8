@@ -28,7 +28,7 @@ std::wstring convert(const wchar_t* src) {
     return std::wstring{src};
 }
 
-}
+} // namespace
 
 BOOST_AUTO_TEST_SUITE(string_tests)
 

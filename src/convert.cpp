@@ -22,7 +22,7 @@ std::runtime_error error(const char* function, DWORD code) {
     return std::runtime_error{oss.str()};
 }
 
-}
+} // namespace
 
 std::wstring widen(const std::string& src) {
     return widen(src.c_str(), src.size());
@@ -33,8 +33,7 @@ std::wstring widen(const std::vector<unsigned char>& src) {
 }
 
 std::wstring widen(const void* src, std::size_t in_nb) {
-    const DWORD flags = MB_ERR_INVALID_CHARS
-                      | MB_PRECOMPOSED;
+    const DWORD flags = MB_ERR_INVALID_CHARS | MB_PRECOMPOSED;
 
     const char* in_data = reinterpret_cast<const char*>(src);
 
@@ -75,8 +74,7 @@ std::string narrow(const void* src, std::size_t in_nb) {
 
     const std::size_t in_nch = in_nb / sizeof(WCHAR);
 
-    const DWORD flags = WC_ERR_INVALID_CHARS
-                      | WC_NO_BEST_FIT_CHARS;
+    const DWORD flags = WC_ERR_INVALID_CHARS | WC_NO_BEST_FIT_CHARS;
 
     const wchar_t* in_data = reinterpret_cast<const wchar_t*>(src);
 
@@ -89,7 +87,8 @@ std::string narrow(const void* src, std::size_t in_nb) {
     std::vector<char> out;
     out.resize(out_nb);
 
-    out_nb = ::WideCharToMultiByte(CP_UTF8, flags, in_data, in_nch, out.data(), out.size(), NULL, NULL);
+    out_nb =
+        ::WideCharToMultiByte(CP_UTF8, flags, in_data, in_nch, out.data(), out.size(), NULL, NULL);
 
     if (out_nb == 0) {
         throw error("WideCharToMultiByte", GetLastError());
@@ -98,4 +97,4 @@ std::string narrow(const void* src, std::size_t in_nb) {
     return {out.data(), out.size()};
 }
 
-}
+} // namespace winapi

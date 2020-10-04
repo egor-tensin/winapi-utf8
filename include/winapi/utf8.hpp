@@ -19,4 +19,4 @@ std::string narrow(const std::wstring&);
 std::string narrow(const std::vector<unsigned char>&);
 std::string narrow(const void*, std::size_t nb);
 
-}
+} // namespace winapi
