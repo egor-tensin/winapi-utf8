@@ -24,8 +24,10 @@ matrix:
 install:
   - git submodule update --init --recursive
 
-build_script:
+before_build:
   - '"%python_exe%" cmake\tools\clang-format.py'
+
+build_script:
   - cd cmake
   - >-
     "%python_exe%" -m project.ci.appveyor.cmake
@@ -52,7 +54,16 @@ for:
     only:
       - image: Visual Studio 2013
   environment:
-    appveyor_boost_root: C:\Libraries\boost_1_58_0
+    boost_version: 1.59.0
+  build_script:
+    - cd cmake
+    - '"%python_exe%" -m project.ci.appveyor.boost -- --with-test'
+    - >-
+      "%python_exe%" -m project.ci.appveyor.cmake
+      --install "%install_dir%"
+      --boost C:\Projects\boost
+      -- -D WINAPI_UTF8_ENABLE_TESTS=ON
+
 - matrix:
     only:
       - image: Visual Studio 2015
