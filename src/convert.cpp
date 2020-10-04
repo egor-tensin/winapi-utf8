@@ -33,7 +33,7 @@ std::wstring widen(const std::vector<unsigned char>& src) {
 }
 
 std::wstring widen(const void* src, std::size_t in_nb) {
-    const DWORD flags = MB_ERR_INVALID_CHARS | MB_PRECOMPOSED;
+    const DWORD flags = MB_ERR_INVALID_CHARS;
 
     const char* in_data = reinterpret_cast<const char*>(src);
 
@@ -74,7 +74,7 @@ std::string narrow(const void* src, std::size_t in_nb) {
 
     const std::size_t in_nch = in_nb / sizeof(WCHAR);
 
-    const DWORD flags = WC_ERR_INVALID_CHARS | WC_NO_BEST_FIT_CHARS;
+    const DWORD flags = WC_ERR_INVALID_CHARS;
 
     const wchar_t* in_data = reinterpret_cast<const wchar_t*>(src);
 
