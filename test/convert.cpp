@@ -5,8 +5,10 @@
 
 #include <winapi/utf8.hpp>
 
-// clang-format off
 #include <boost/format.hpp>
+
+// clang-format off
+// The order matters for older Boost versions.
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>

@@ -59,6 +59,7 @@ for:
     only:
       - image: Visual Studio 2013
   environment:
+    # First release of Boost.Test v3.
     boost_version: 1.59.0
   build_script:
     - cd cmake
