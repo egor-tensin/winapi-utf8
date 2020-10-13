@@ -20,7 +20,7 @@ namespace {
 
 std::runtime_error error(const char* function, DWORD code) {
     std::ostringstream oss;
-    oss << function << " failed with error code " << code;
+    oss << "Function " << function << " failed with error code " << code;
     return std::runtime_error{oss.str()};
 }
 
@@ -29,7 +29,7 @@ int convert_input_bytes_to_bytes(std::size_t nb) {
 
     if (!SafeCast(nb, real_nb)) {
         std::ostringstream oss;
-        oss << "input buffer is too large at " << nb << " bytes";
+        oss << "Input buffer is too large at " << nb << " bytes";
         throw std::runtime_error{oss.str()};
     }
 
@@ -39,7 +39,7 @@ int convert_input_bytes_to_bytes(std::size_t nb) {
 int convert_input_bytes_to_chars(std::size_t nb) {
     if (nb % sizeof(WCHAR) != 0) {
         std::ostringstream oss;
-        oss << "invalid buffer size: " << nb;
+        oss << "Invalid buffer size " << nb << " bytes";
         throw std::runtime_error{oss.str()};
     }
 
@@ -49,7 +49,7 @@ int convert_input_bytes_to_chars(std::size_t nb) {
 
     if (!SafeCast(nch, real_nch)) {
         std::ostringstream oss;
-        oss << "input buffer is too large at " << nch << " characters";
+        oss << "Input buffer is too large at " << nch << " characters";
         throw std::runtime_error{oss.str()};
     }
 
@@ -62,7 +62,7 @@ std::vector<CharT> output_buffer(int size) {
 
     if (!SafeCast(size, real_size)) {
         std::ostringstream oss;
-        oss << "invalid buffer size " << size;
+        oss << "Invalid buffer size " << size << " bytes";
         throw std::runtime_error{oss.str()};
     }
 
@@ -75,7 +75,7 @@ template <typename CharT>
 void verify_output(const std::vector<CharT>& expected, int actual_size) {
     if (!SafeEquals(expected.size(), actual_size)) {
         std::ostringstream oss;
-        oss << "expected output length " << expected.size() << ", got " << actual_size;
+        oss << "Expected output length " << expected.size() << ", got " << actual_size;
         throw std::runtime_error{oss.str()};
     }
 }
