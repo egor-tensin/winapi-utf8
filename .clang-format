@@ -13,7 +13,7 @@ IncludeCategories:
     Priority: 1
   - Regex: '^<(winapi)/'
     Priority: 2
-  - Regex: '^<boost/'
+  - Regex: '^<boost\/|^<SafeInt\.'
     Priority: 3
   - Regex: '^<.*\.h>$'
     Priority: 4
