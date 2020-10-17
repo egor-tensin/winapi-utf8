@@ -4,9 +4,9 @@ project(winapi_utf8 CXX)
 
 include(cmake/common.cmake)
 
-file(GLOB_RECURSE winapi_utf8_include "include/*.hpp")
-file(GLOB winapi_utf8_src "src/*.cpp")
-add_library(winapi_utf8 ${winapi_utf8_include} ${winapi_utf8_src})
+file(GLOB_RECURSE winapi_utf8_hpp "include/*.hpp")
+file(GLOB winapi_utf8_cpp "src/*.cpp")
+add_library(winapi_utf8 ${winapi_utf8_hpp} ${winapi_utf8_cpp})
 target_include_directories(winapi_utf8 PUBLIC include/)
 
 add_subdirectory(3rdparty/microsoft/SafeInt EXCLUDE_FROM_ALL)
