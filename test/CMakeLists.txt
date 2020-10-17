@@ -1,7 +1,8 @@
 file(GLOB unit_tests_cpp "*.cpp")
 add_executable(unit_tests ${unit_tests_cpp})
-target_link_libraries(unit_tests PRIVATE winapi_utf8)
 set_target_properties(unit_tests PROPERTIES OUTPUT_NAME winapi-utf8-unit-tests)
+
+target_link_libraries(unit_tests PRIVATE winapi_utf8)
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
 target_link_libraries(unit_tests PRIVATE Boost::disable_autolinking Boost::unit_test_framework)
