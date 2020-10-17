@@ -9,9 +9,9 @@ IndentWidth: 4
 SpacesBeforeTrailingComments: 1
 
 IncludeCategories:
-  - Regex: '^".*'
+  - Regex: '^".+'
     Priority: 1
-  - Regex: '^<(winapi)/'
+  - Regex: '^<winapi\/'
     Priority: 2
   - Regex: '^<boost\/|^<SafeInt\.'
     Priority: 3
