@@ -116,8 +116,12 @@ std::wstring widen(const void* src, std::size_t in_nb) {
 }
 
 std::string narrow(const std::wstring& src) {
-    static_assert(sizeof(std::wstring::value_type) == sizeof(WCHAR), "wchar_t != WCHAR");
-    return narrow(src.c_str(), src.size() * sizeof(std::wstring::value_type));
+    return narrow(src.c_str(), src.size());
+}
+
+std::string narrow(const wchar_t* src, std::size_t nch) {
+    static_assert(sizeof(wchar_t) == sizeof(WCHAR), "wchar_t != WCHAR");
+    return narrow(src, nch * sizeof(wchar_t));
 }
 
 std::string narrow(const std::vector<unsigned char>& src) {

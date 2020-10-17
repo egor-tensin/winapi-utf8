@@ -16,6 +16,7 @@ std::wstring widen(const std::vector<unsigned char>&);
 std::wstring widen(const void*, std::size_t nb);
 
 std::string narrow(const std::wstring&);
+std::string narrow(const wchar_t*, std::size_t nch);
 std::string narrow(const std::vector<unsigned char>&);
 std::string narrow(const void*, std::size_t nb);
 
