@@ -6,18 +6,26 @@
 #pragma once
 
 #include <cstddef>
+#include <memory>
 #include <string>
 #include <vector>
 
 namespace winapi {
 
 std::wstring widen(const std::string&);
-std::wstring widen(const std::vector<unsigned char>&);
 std::wstring widen(const void*, std::size_t nb);
 
+template <typename T, typename Alloc = std::allocator<T>>
+std::wstring widen(const std::vector<T, Alloc>& src) {
+    return widen(src.data(), src.size() * sizeof(T));
+}
+
 std::string narrow(const std::wstring&);
-std::string narrow(const wchar_t*, std::size_t nch);
-std::string narrow(const std::vector<unsigned char>&);
 std::string narrow(const void*, std::size_t nb);
+
+template <typename T, typename Alloc = std::allocator<T>>
+std::string narrow(const std::vector<T, Alloc>& src) {
+    return narrow(src.data(), src.size() * sizeof(T));
+}
 
 } // namespace winapi

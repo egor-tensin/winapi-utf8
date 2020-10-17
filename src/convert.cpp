@@ -86,10 +86,6 @@ std::wstring widen(const std::string& src) {
     return widen(src.c_str(), src.size());
 }
 
-std::wstring widen(const std::vector<unsigned char>& src) {
-    return widen(src.data(), src.size());
-}
-
 std::wstring widen(const void* src, std::size_t in_nb) {
     const DWORD flags = MB_ERR_INVALID_CHARS;
 
@@ -116,16 +112,8 @@ std::wstring widen(const void* src, std::size_t in_nb) {
 }
 
 std::string narrow(const std::wstring& src) {
-    return narrow(src.c_str(), src.size());
-}
-
-std::string narrow(const wchar_t* src, std::size_t nch) {
     static_assert(sizeof(wchar_t) == sizeof(WCHAR), "wchar_t != WCHAR");
-    return narrow(src, nch * sizeof(wchar_t));
-}
-
-std::string narrow(const std::vector<unsigned char>& src) {
-    return narrow(src.data(), src.size());
+    return narrow(src.c_str(), src.size() * sizeof(std::wstring::value_type));
 }
 
 std::string narrow(const void* src, std::size_t in_nb) {
