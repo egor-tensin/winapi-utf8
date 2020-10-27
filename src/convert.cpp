@@ -39,7 +39,7 @@ int convert_input_bytes_to_bytes(std::size_t nb) {
 int convert_input_bytes_to_chars(std::size_t nb) {
     if (nb % sizeof(WCHAR) != 0) {
         std::ostringstream oss;
-        oss << "Invalid buffer size " << nb << " bytes";
+        oss << "Buffer size invalid at " << nb << " bytes";
         throw std::runtime_error{oss.str()};
     }
 
@@ -62,7 +62,7 @@ std::vector<CharT> output_buffer(int size) {
 
     if (!SafeCast(size, real_size)) {
         std::ostringstream oss;
-        oss << "Invalid buffer size " << size << " bytes";
+        oss << "Buffer size invalid at " << size << " bytes";
         throw std::runtime_error{oss.str()};
     }
 
