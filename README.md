@@ -1,8 +1,7 @@
 winapi-utf8
 ===========
 
-[![AppVeyor branch](https://img.shields.io/appveyor/build/egor-tensin/winapi-utf8/master?label=AppVeyor)](https://ci.appveyor.com/project/egor-tensin/winapi-utf8/branch/master)
-[![Travis (.com) branch](https://img.shields.io/travis/com/egor-tensin/winapi-utf8/master?label=Travis)](https://travis-ci.com/github/egor-tensin/winapi-utf8)
+[![CI](https://github.com/egor-tensin/winapi-utf8/workflows/CI/badge.svg)](https://github.com/egor-tensin/winapi-utf8/actions?query=workflow%3ACI)
 
 UTF-8 <-> UTF-16 conversion functions, mainly to be used with WinAPI.
 
