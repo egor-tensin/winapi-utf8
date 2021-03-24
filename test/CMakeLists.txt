@@ -11,3 +11,5 @@ install(TARGETS unit_tests RUNTIME DESTINATION bin)
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     install(FILES "$<TARGET_PDB_FILE:unit_tests>" DESTINATION bin OPTIONAL)
 endif()
+
+add_test(NAME unit_tests COMMAND unit_tests)

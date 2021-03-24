@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.5) # for Boost::* imported targets
 
 project(winapi_utf8 CXX)
 
+enable_testing()
+
 include(cmake/common.cmake)
 
 file(GLOB_RECURSE winapi_utf8_include "include/*.hpp")

@@ -71,5 +71,7 @@ jobs:
           name: 'winapi-utf8-${{ matrix.os }}-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
           path: '${{ runner.workspace }}/build/install/'
       - name: Test
-        run: ../build/install/bin/winapi-utf8-unit-tests
+        run: |
+          cd ../build/cmake
+          ctest -C '${{ env.CONFIGURATION }}' --verbose
         if: runner.os == 'Windows'
