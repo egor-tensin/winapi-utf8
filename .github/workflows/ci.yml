@@ -36,10 +36,10 @@ jobs:
     runs-on: '${{ matrix.os }}'
     name: 'Build: ${{ matrix.os }} / ${{ matrix.toolset }} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
     env:
-      toolset: '${{ matrix.toolset }}'
-      platform: '${{ matrix.platform }}'
-      configuration: '${{ matrix.configuration }}'
-      boost_version: 1.72.0
+      TOOLSET: '${{ matrix.toolset }}'
+      PLATFORM: '${{ matrix.platform }}'
+      CONFIGURATION: '${{ matrix.configuration }}'
+      BOOST_VERSION: 1.72.0
     defaults:
       run:
         shell: pwsh
@@ -57,20 +57,19 @@ jobs:
         with:
           platform: '${{ matrix.platform }}'
         if: matrix.toolset == 'mingw'
-      - name: Boost (MinGW)
+      - name: Build Boost
         run: |
           cd cmake
-          python -m project.ci.github.boost -- --with-test
-        if: matrix.toolset == 'mingw'
+          python -m project.ci.boost -- --with-test
       - name: Build
         run: |
           cd cmake
-          python -m project.ci.github.cmake --install -- -D WINAPI_UTF8_TESTS=ON
-      - name: Upload the binaries
+          python -m project.ci.cmake --install -- -D WINAPI_UTF8_TESTS=ON
+      - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
           name: 'winapi-utf8-${{ matrix.os }}-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
-          path: '${{ runner.workspace }}/install/'
-      - name: Run unit tests
-        run: ../install/bin/winapi-utf8-unit-tests
+          path: '${{ runner.workspace }}/build/install/'
+      - name: Test
+        run: ../build/install/bin/winapi-utf8-unit-tests
         if: runner.os == 'Windows'
