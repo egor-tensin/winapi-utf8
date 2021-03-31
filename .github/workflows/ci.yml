@@ -40,6 +40,7 @@ jobs:
       PLATFORM: '${{ matrix.platform }}'
       CONFIGURATION: '${{ matrix.configuration }}'
       BOOST_VERSION: 1.72.0
+      CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=ON
     defaults:
       run:
         shell: pwsh
@@ -58,20 +59,14 @@ jobs:
           platform: '${{ matrix.platform }}'
         if: matrix.toolset == 'mingw'
       - name: Build Boost
-        run: |
-          cd cmake
-          python -m project.ci.boost -- --with-test
+        run: make deps
       - name: Build
-        run: |
-          cd cmake
-          python -m project.ci.cmake --install -- -D WINAPI_UTF8_TESTS=ON
+        run: make install
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
           name: 'winapi-utf8-${{ matrix.os }}-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
           path: '${{ runner.workspace }}/build/install/'
       - name: Test
-        run: |
-          cd ../build/cmake
-          ctest -C '${{ env.CONFIGURATION }}' --verbose
+        run: make test
         if: runner.os == 'Windows'
