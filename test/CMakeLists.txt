@@ -11,3 +11,5 @@ install(TARGETS unit_tests RUNTIME DESTINATION bin)
 install_pdbs(TARGETS unit_tests DESTINATION bin)
 
 add_test(NAME unit_tests COMMAND unit_tests)
+set_tests_properties(unit_tests PROPERTIES
+                     PASS_REGULAR_EXPRESSION "No errors detected")
