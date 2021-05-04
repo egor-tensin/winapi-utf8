@@ -5,11 +5,10 @@
 
 #include <winapi/utf8.hpp>
 
-#include <SafeInt.hpp>
-
 #include <windows.h>
 
 #include <cstddef>
+#include <cstdint>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -24,10 +23,24 @@ std::runtime_error error(const char* function, DWORD code) {
     return std::runtime_error{oss.str()};
 }
 
-int convert_input_bytes_to_bytes(std::size_t nb) {
-    int real_nb = 0;
+bool size_t_to_int(std::size_t src, int32_t& dest) {
+    if (src > static_cast<uint32_t>(INT32_MAX))
+        return false;
+    dest = static_cast<int32_t>(src);
+    return true;
+}
 
-    if (!SafeCast(nb, real_nb)) {
+bool int_to_size_t(int32_t src, std::size_t& dest) {
+    if (src < 0 || static_cast<uint32_t>(src) > SIZE_MAX)
+        return false;
+    dest = static_cast<std::size_t>(src);
+    return true;
+}
+
+int32_t convert_input_bytes_to_bytes(std::size_t nb) {
+    int32_t real_nb = 0;
+
+    if (!size_t_to_int(nb, real_nb)) {
         std::ostringstream oss;
         oss << "Input buffer is too large at " << nb << " bytes";
         throw std::runtime_error{oss.str()};
@@ -36,7 +49,7 @@ int convert_input_bytes_to_bytes(std::size_t nb) {
     return real_nb;
 }
 
-int convert_input_bytes_to_chars(std::size_t nb) {
+int32_t convert_input_bytes_to_chars(std::size_t nb) {
     if (nb % sizeof(WCHAR) != 0) {
         std::ostringstream oss;
         oss << "Buffer size invalid at " << nb << " bytes";
@@ -44,10 +57,9 @@ int convert_input_bytes_to_chars(std::size_t nb) {
     }
 
     const std::size_t nch = nb / sizeof(WCHAR);
+    int32_t real_nch = 0;
 
-    int real_nch = 0;
-
-    if (!SafeCast(nch, real_nch)) {
+    if (!size_t_to_int(nch, real_nch)) {
         std::ostringstream oss;
         oss << "Input buffer is too large at " << nch << " characters";
         throw std::runtime_error{oss.str()};
@@ -57,10 +69,10 @@ int convert_input_bytes_to_chars(std::size_t nb) {
 }
 
 template <typename CharT>
-std::vector<CharT> output_buffer(int size) {
+std::vector<CharT> output_buffer(int32_t size) {
     std::size_t real_size = 0;
 
-    if (!SafeCast(size, real_size)) {
+    if (!int_to_size_t(size, real_size)) {
         std::ostringstream oss;
         oss << "Buffer size invalid at " << size << " bytes";
         throw std::runtime_error{oss.str()};
@@ -72,10 +84,12 @@ std::vector<CharT> output_buffer(int size) {
 }
 
 template <typename CharT>
-void verify_output(const std::vector<CharT>& expected, int actual_size) {
-    if (!SafeEquals(expected.size(), actual_size)) {
+void verify_output(const std::vector<CharT>& expected, int32_t _actual_size) {
+    std::size_t actual_size = 0;
+
+    if (!int_to_size_t(_actual_size, actual_size) || expected.size() != actual_size) {
         std::ostringstream oss;
-        oss << "Expected output length " << expected.size() << ", got " << actual_size;
+        oss << "Expected output length " << expected.size() << ", got " << _actual_size;
         throw std::runtime_error{oss.str()};
     }
 }

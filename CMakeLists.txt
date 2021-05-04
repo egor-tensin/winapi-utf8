@@ -5,15 +5,10 @@ enable_testing()
 
 include(cmake/common.cmake)
 
-if(NOT TARGET SafeInt)
-    add_subdirectory(3rdparty/microsoft/SafeInt EXCLUDE_FROM_ALL)
-endif()
-
 file(GLOB_RECURSE winapi_utf8_include "include/*.hpp")
 file(GLOB winapi_utf8_src "src/*.cpp")
 add_library(winapi_utf8 ${winapi_utf8_include} ${winapi_utf8_src})
 target_include_directories(winapi_utf8 PUBLIC include)
-target_link_libraries(winapi_utf8 PRIVATE SafeInt)
 # Vista is the lower bound (due to WC_ERR_INVALID_CHARS):
 if(MINGW)
     target_compile_definitions(winapi_utf8 PRIVATE
