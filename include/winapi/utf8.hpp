@@ -3,6 +3,11 @@
 // For details, see https://github.com/egor-tensin/winapi-utf8.
 // Distributed under the MIT License.
 
+/**
+ * @file
+ * @brief UTF-8 <-> UTF-16 conversion functions
+ */
+
 #pragma once
 
 #include <cstddef>
@@ -12,17 +17,37 @@
 
 namespace winapi {
 
+/** Convert UTF-8 string to UTF-16. */
 std::wstring widen(const std::string&);
-std::wstring widen(const void*, std::size_t nb);
+/**
+ * Convert UTF-8 string to UTF-16.
+ * \param src Pointer to UTF-8 string.
+ * \param nb  Number of bytes pointed to src.
+ */
+std::wstring widen(const void* src, std::size_t nb);
 
+/**
+ * Convert UTF-8 string to UTF-16.
+ * \param src UTF-8 string.
+ */
 template <typename T, typename Alloc = std::allocator<T>>
 std::wstring widen(const std::vector<T, Alloc>& src) {
     return widen(src.data(), src.size() * sizeof(T));
 }
 
+/** Convert UTF-16 string to UTF-8. */
 std::string narrow(const std::wstring&);
-std::string narrow(const void*, std::size_t nb);
+/**
+ * Convert UTF-16 string to UTF-8.
+ * \param src Pointer to UTF-16 string.
+ * \param nb  Number of bytes pointed to by src.
+ */
+std::string narrow(const void* src, std::size_t nb);
 
+/**
+ * Convert UTF-16 string to UTF-8.
+ * \param src UTF-16 string.
+ */
 template <typename T, typename Alloc = std::allocator<T>>
 std::string narrow(const std::vector<T, Alloc>& src) {
     return narrow(src.data(), src.size() * sizeof(T));

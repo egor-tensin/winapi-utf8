@@ -83,6 +83,15 @@ install: build
 test:
 	cd -- '$(call escape,$(cmake_dir))' && ctest -C '$(call escape,$(CONFIGURATION))' --verbose
 
+xdg-open := $(shell command -v xdg-open 2> /dev/null)
+
+.PHONY: docs
+docs:
+	cmake --build '$(call escape,$(cmake_dir))' --target docs
+ifdef xdg-open
+	xdg-open '$(call escape,$(cmake_dir))/html/index.html'
+endif
+
 clang-tidy := run-clang-tidy
 ifeq (1,$(shell test -e /usr/share/clang/run-clang-tidy.py && echo 1))
 clang-tidy := /usr/share/clang/run-clang-tidy.py

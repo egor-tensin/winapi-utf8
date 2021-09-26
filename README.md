@@ -20,6 +20,13 @@ directory (defaults to building with MinGW-w64):
     make build
     make test
 
+Documentation
+-------------
+
+Build & display the documentation using
+
+    make docs
+
 License
 -------
 

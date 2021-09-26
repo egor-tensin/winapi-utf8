@@ -23,3 +23,12 @@ if(WINAPI_UTF8_TESTS)
 endif()
 
 install(FILES LICENSE.txt DESTINATION share)
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
+    set(DOXYGEN_SOURCE_BROWSER YES)
+    set(DOXYGEN_INCLUDE_GRAPH NO)
+    set(DOXYGEN_INCLUDED_BY_GRAPH NO)
+    doxygen_add_docs(docs README.md ${winapi_utf8_include} ${winapi_utf8_src})
+endif()
