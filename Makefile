@@ -88,8 +88,10 @@ xdg-open := $(shell command -v xdg-open 2> /dev/null)
 .PHONY: docs
 docs:
 	cmake --build '$(call escape,$(cmake_dir))' --target docs
+ifndef CI
 ifdef xdg-open
 	xdg-open '$(call escape,$(cmake_dir))/html/index.html'
+endif
 endif
 
 clang-tidy := run-clang-tidy

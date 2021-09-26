@@ -8,6 +8,10 @@ on:
     - cron: '30 5 * * 0'
   workflow_dispatch:
 
+env:
+  BOOST_VERSION: 1.72.0
+  CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=ON
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -43,8 +47,6 @@ jobs:
       TOOLSET: '${{ matrix.toolset }}'
       PLATFORM: '${{ matrix.platform }}'
       CONFIGURATION: '${{ matrix.configuration }}'
-      BOOST_VERSION: 1.72.0
-      CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=ON
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -75,3 +77,41 @@ jobs:
       - name: Test
         run: make test
         if: runner.os == 'Windows'
+
+  docs:
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    name: Docs
+    if: github.ref == 'refs/heads/master'
+    env:
+      TOOLSET: mingw
+      PLATFORM: auto
+      CONFIGURATION: Debug
+      CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=OFF
+    steps:
+      # This is rather stupid. In order to build Doxygen docs, I need a working
+      # CMake build directory, so I assume that means I need to pretty much
+      # build the project. TODO: research if this is possible without having a
+      # Doxyfile.
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends doxygen
+      - name: Build
+        run: make install
+      - name: Build docs
+        run: make docs
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: ../build/cmake/html
+          single-commit: true
