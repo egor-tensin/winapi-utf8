@@ -46,6 +46,11 @@ std::vector<unsigned char> from(const std::basic_string<CharT>& s) {
     return {buf, buf + size};
 }
 
+template <typename CharT>
+std::vector<unsigned char> from(const CharT* s) {
+    return from(std::basic_string<CharT>{s});
+}
+
 std::vector<std::vector<unsigned char>> utf16 = {
     // Hello
     from({0x48, 0x00, 0x65, 0x00, 0x6c, 0x00, 0x6c, 0x00, 0x6f, 0x00}),
@@ -74,6 +79,13 @@ BOOST_DATA_TEST_CASE(test_narrow, boost::unit_test::data::make(utf16) ^ utf8, in
 BOOST_DATA_TEST_CASE(test_widen, boost::unit_test::data::make(utf8) ^ utf16, input, expected) {
     auto actual = from(winapi::widen(input));
     BOOST_TEST(actual == expected, "Expected: " << expected << ", actual: " << actual);
+}
+
+BOOST_AUTO_TEST_CASE(test_literals) {
+    const auto hello16 = u"Привет";
+    const auto hello8 = u8"Привет";
+    BOOST_TEST(from(hello16) == from(winapi::widen(hello8)));
+    BOOST_TEST(from(hello8) == from(winapi::narrow(hello16)));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
