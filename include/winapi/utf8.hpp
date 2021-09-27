@@ -19,16 +19,17 @@ namespace winapi {
 
 /** Convert UTF-8 string to UTF-16. */
 std::wstring widen(const std::string&);
+
 /**
  * Convert UTF-8 string to UTF-16.
- * \param src Pointer to UTF-8 string.
- * \param nb  Number of bytes pointed to src.
+ * \param src Memory address of a UTF-8 string.
+ * \param nb  String size (in bytes).
  */
 std::wstring widen(const void* src, std::size_t nb);
 
 /**
  * Convert UTF-8 string to UTF-16.
- * \param src UTF-8 string.
+ * \param src Buffer holding a UTF-8 string.
  */
 template <typename T, typename Alloc = std::allocator<T>>
 std::wstring widen(const std::vector<T, Alloc>& src) {
@@ -37,16 +38,17 @@ std::wstring widen(const std::vector<T, Alloc>& src) {
 
 /** Convert UTF-16 string to UTF-8. */
 std::string narrow(const std::wstring&);
+
 /**
  * Convert UTF-16 string to UTF-8.
- * \param src Pointer to UTF-16 string.
- * \param nb  Number of bytes pointed to by src.
+ * \param src Memory address of a UTF-16 string.
+ * \param nb  String size (in bytes).
  */
 std::string narrow(const void* src, std::size_t nb);
 
 /**
  * Convert UTF-16 string to UTF-8.
- * \param src UTF-16 string.
+ * \param src Buffer holding a UTF-16 string.
  */
 template <typename T, typename Alloc = std::allocator<T>>
 std::string narrow(const std::vector<T, Alloc>& src) {
