@@ -17,6 +17,9 @@
 
 namespace winapi {
 
+/* sizeof(wchar_t) == 4 on Linux, we don't care about that. */
+static_assert(sizeof(wchar_t) == 2, "This is Windows, right?");
+
 /** Convert UTF-8 string to UTF-16. */
 std::wstring widen(const std::string&);
 
@@ -38,6 +41,9 @@ std::wstring widen(const std::vector<T, Alloc>& src) {
 
 /** Convert UTF-16 string to UTF-8. */
 std::string narrow(const std::wstring&);
+
+/** Convert UTF-16 string to UTF-8. */
+std::string narrow(const std::u16string&);
 
 /**
  * Convert UTF-16 string to UTF-8.

@@ -130,6 +130,10 @@ std::string narrow(const std::wstring& src) {
     return narrow(src.c_str(), src.size() * sizeof(std::wstring::value_type));
 }
 
+std::string narrow(const std::u16string& src) {
+    return narrow(src.c_str(), src.size() * sizeof(std::u16string::value_type));
+}
+
 std::string narrow(const void* src, std::size_t in_nb) {
     const DWORD flags = WC_ERR_INVALID_CHARS;
 
