@@ -4,8 +4,8 @@
 // Distributed under the MIT License.
 
 /**
- * @file
- * @brief UTF-8 <-> UTF-16 conversion functions
+ * \file
+ * \brief UTF-8 <-> UTF-16 conversion functions
  */
 
 #pragma once
