@@ -5,6 +5,23 @@ winapi-utf8
 
 UTF-8 <-> UTF-16 conversion functions, mainly to be used with WinAPI.
 
+Usage
+-----
+
+Include it in your CMake project and link to the `winapi_utf8` target.
+Use the `narrow()` and `widen()` functions to convert to UTF-8 and UTF-16
+respectively:
+
+    #include <winapi/utf8.hpp>
+
+    winapi::narrow(u"Привет"); // Returns the UTF-8 representation
+    winapi::widen(u8"Привет"); // Returns the UTF-16 representation
+
+See the various convenience overloads of these function in the
+[online documentation].
+
+[online documentation]: https://egor-tensin.github.io/winapi-utf8/utf8_8hpp.html
+
 Development
 -----------
 
@@ -26,6 +43,8 @@ Documentation
 Build & display the documentation using
 
     make docs
+
+View the online documentation at https://egor-tensin.github.io/winapi-utf8/.
 
 License
 -------
