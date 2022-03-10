@@ -1,6 +1,3 @@
-# Various one-liners which I'm too lazy to remember.
-# Basically a collection of really small shell scripts.
-
 MAKEFLAGS += --no-builtin-rules --no-builtin-variables --warn-undefined-variables
 unexport MAKEFLAGS
 .DEFAULT_GOAL := all
@@ -8,9 +5,6 @@ unexport MAKEFLAGS
 .SUFFIXES:
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
-
-.PHONY: DO
-DO:
 
 escape = $(subst ','\'',$(1))
 
@@ -48,6 +42,9 @@ $(eval $(call noexpand,CONFIGURATION))
 $(eval $(call noexpand,BOOST_VERSION))
 $(eval $(call noexpand,CMAKE_FLAGS))
 $(eval $(call noexpand,DESTDIR))
+
+.PHONY: DO
+DO:
 
 .PHONY: all
 all: build
@@ -90,7 +87,7 @@ docs:
 	cmake --build '$(call escape,$(cmake_dir))' --target docs
 ifndef CI
 ifdef xdg-open
-	xdg-open '$(call escape,$(cmake_dir))/html/index.html'
+	xdg-open '$(call escape,$(cmake_dir))/html/index.html' &> /dev/null
 endif
 endif
 
