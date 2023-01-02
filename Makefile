@@ -84,7 +84,7 @@ xdg-open := $(shell command -v xdg-open 2> /dev/null)
 
 .PHONY: docs
 docs:
-	cmake --build '$(call escape,$(cmake_dir))' --target docs
+	cmake --build '$(call escape,$(cmake_dir))' --target winapi_utf8_docs
 ifndef CI
 ifdef xdg-open
 	xdg-open '$(call escape,$(cmake_dir))/html/index.html' &> /dev/null
