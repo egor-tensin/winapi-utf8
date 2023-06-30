@@ -1,24 +1,4 @@
-MAKEFLAGS += --no-builtin-rules --no-builtin-variables --warn-undefined-variables
-unexport MAKEFLAGS
-.DEFAULT_GOAL := all
-.DELETE_ON_ERROR:
-.SUFFIXES:
-SHELL := bash
-.SHELLFLAGS := -eu -o pipefail -c
-
-escape = $(subst ','\'',$(1))
-
-define noexpand
-ifeq ($$(origin $(1)),environment)
-    $(1) := $$(value $(1))
-endif
-ifeq ($$(origin $(1)),environment override)
-    $(1) := $$(value $(1))
-endif
-ifeq ($$(origin $(1)),command line)
-    override $(1) := $$(value $(1))
-endif
-endef
+include prelude.mk
 
 TOOLSET ?= mingw
 CONFIGURATION ?= Debug
@@ -42,9 +22,6 @@ $(eval $(call noexpand,CONFIGURATION))
 $(eval $(call noexpand,BOOST_VERSION))
 $(eval $(call noexpand,CMAKE_FLAGS))
 $(eval $(call noexpand,DESTDIR))
-
-.PHONY: DO
-DO:
 
 .PHONY: all
 all: build
