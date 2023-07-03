@@ -51,7 +51,7 @@ jobs:
       - name: Cache Boost
         uses: actions/cache@v3
         with:
-          path: '${{ runner.workspace }}/build/boost_*.tar.gz'
+          path: './build/boost_*.tar.gz'
           key: 'boost_${{ env.BOOST_VERSION }}'
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: 'winapi-utf8-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
-          path: '${{ runner.workspace }}/build/install/'
+          path: './build/install/'
           if-no-files-found: error
       - name: Test
         run: make test
@@ -83,8 +83,6 @@ jobs:
     if: github.ref == 'refs/heads/master'
     env:
       TOOLSET: mingw
-      PLATFORM: auto
-      CONFIGURATION: Debug
       CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=OFF
     steps:
       # This is rather stupid. In order to build Doxygen docs, I need a working
@@ -113,5 +111,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: ../build/cmake/html
+          folder: ./build/cmake/html
           single-commit: true
