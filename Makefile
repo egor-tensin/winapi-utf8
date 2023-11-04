@@ -10,7 +10,7 @@ install_dir := $(build_dir)/install
 TOOLSET         ?= mingw
 PLATFORM        ?= auto
 CONFIGURATION   ?= Debug
-BOOST_VERSION   ?= 1.72.0
+BOOST_VERSION   ?= 1.81.0
 BOOST_LIBRARIES := --with-test
 CMAKE_FLAGS     ?= -D WINAPI_UTF8_TESTS=ON
 INSTALL_PREFIX  ?= $(install_dir)
