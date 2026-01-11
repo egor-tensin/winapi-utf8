@@ -67,7 +67,7 @@ jobs:
       - name: Build
         run: make install
       - name: Upload binaries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: 'winapi-utf8-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
           path: './build/install/'
