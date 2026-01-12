@@ -25,16 +25,17 @@ jobs:
   build:
     strategy:
       matrix:
-        toolset: [mingw, vs2022]
+        os: [ubuntu-latest, windows-2022, windows-2025]
         platform: [x64, x86]
         configuration: [Debug, RelWithDebInfo]
         include:
           # MinGW builds are done on Linux, since it's more up-to-date there, and
           # it's much faster.
-          - {toolset: mingw, os: ubuntu-latest}
-          - {toolset: vs2022, os: windows-2025}
+          - {os: ubuntu-latest, toolset: mingw}
+          - {os: windows-2022, toolset: vs2022}
+          - {os: windows-2025, toolset: vs2022}
     runs-on: '${{ matrix.os }}'
-    name: 'Build: ${{ matrix.toolset }} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
+    name: 'Build: ${{ matrix.os}} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
     defaults:
       run:
         shell: pwsh
@@ -68,7 +69,7 @@ jobs:
       - name: Upload binaries
         uses: actions/upload-artifact@v6
         with:
-          name: 'winapi-utf8-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
+          name: 'winapi-utf8-${{ matrix.os }}-${{ matrix.platform }}-${{ matrix.configuration }}'
           path: './build/install/'
           if-no-files-found: error
       - name: Test
