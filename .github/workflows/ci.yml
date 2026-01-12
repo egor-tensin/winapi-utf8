@@ -33,6 +33,7 @@ jobs:
           # it's much faster.
           - {os: ubuntu-latest, toolset: mingw}
           - {os: windows-2022, toolset: vs2022}
+          # At the moment, the 2025 image still has VS 2022.
           - {os: windows-2025, toolset: vs2022}
     runs-on: '${{ matrix.os }}'
     name: 'Build: ${{ matrix.os}} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
