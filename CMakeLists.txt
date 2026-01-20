@@ -1,13 +1,15 @@
-cmake_minimum_required(VERSION 3.8)
+# For CONFIGURE_DEPENDS
+cmake_minimum_required(VERSION 3.12)
 
 project(winapi_utf8 CXX)
 enable_testing()
 
 include(cmake/common.cmake)
 
-file(GLOB_RECURSE winapi_utf8_include "include/*.hpp")
-file(GLOB winapi_utf8_src "src/*.cpp")
+file(GLOB_RECURSE winapi_utf8_include CONFIGURE_DEPENDS "include/*.hpp")
+file(GLOB winapi_utf8_src CONFIGURE_DEPENDS "src/*.cpp")
 add_library(winapi_utf8 ${winapi_utf8_include} ${winapi_utf8_src})
+
 target_include_directories(winapi_utf8 PUBLIC include)
 # Vista is the lower bound (due to WC_ERR_INVALID_CHARS):
 if(MINGW)
