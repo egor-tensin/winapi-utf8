@@ -12,7 +12,6 @@ PLATFORM        ?= auto
 CONFIGURATION   ?= Debug
 BOOST_VERSION   ?= 1.81.0
 BOOST_LIBRARIES := --with-test
-CMAKE_FLAGS     ?= -D WINAPI_UTF8_TESTS=ON
 INSTALL_PREFIX  ?= $(install_dir)
 
 $(eval $(call noexpand,TOOLSET))
@@ -54,10 +53,10 @@ build:
 		--configuration '$(call escape,$(CONFIGURATION))' \
 		--install '$(call escape,$(INSTALL_PREFIX))' \
 		--boost '$(call escape,$(boost_dir))' \
+		--cmake-arg=-DWINAPI_UTF8_TESTS=ON \
 		-- \
 		'$(call escape,$(src_dir))' \
 		'$(call escape,$(cmake_dir))' \
-		$(CMAKE_FLAGS)
 
 .PHONY: install
 install: build

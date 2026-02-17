@@ -1,10 +1,8 @@
 # For CONFIGURE_DEPENDS
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.30)
 
 project(winapi_utf8 CXX)
 enable_testing()
-
-include(cmake/common.cmake)
 
 file(GLOB_RECURSE winapi_utf8_include CONFIGURE_DEPENDS "include/*.hpp")
 file(GLOB winapi_utf8_src CONFIGURE_DEPENDS "src/*.cpp")
