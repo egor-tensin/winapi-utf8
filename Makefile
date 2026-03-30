@@ -11,8 +11,9 @@ TOOLSET         ?= mingw
 PLATFORM        ?= auto
 CONFIGURATION   ?= Debug
 BOOST_VERSION   ?= 1.81.0
-BOOST_LIBRARIES := --with-test
+BOOST_LIBRARIES := test
 INSTALL_PREFIX  ?= $(install_dir)
+SKIP_TESTS      ?=
 
 $(eval $(call noexpand,TOOLSET))
 $(eval $(call noexpand,PLATFORM))
@@ -45,6 +46,12 @@ deps: $(boost_dir)/
 		'$(call escape,$(boost_dir))' \
 		$(BOOST_LIBRARIES)
 
+ifneq ($(SKIP_TESTS),)
+tests_args := --cmake-arg=-DWINAPI_UTF8_TESTS=OFF
+else
+tests_args := --cmake-arg=-DWINAPI_UTF8_TESTS=ON
+endif
+
 .PHONY: build
 build:
 	cd cmake && python3 -m project.build \
@@ -53,7 +60,7 @@ build:
 		--configuration '$(call escape,$(CONFIGURATION))' \
 		--install '$(call escape,$(INSTALL_PREFIX))' \
 		--boost '$(call escape,$(boost_dir))' \
-		--cmake-arg=-DWINAPI_UTF8_TESTS=ON \
+		$(tests_args) \
 		-- \
 		'$(call escape,$(src_dir))' \
 		'$(call escape,$(cmake_dir))' \

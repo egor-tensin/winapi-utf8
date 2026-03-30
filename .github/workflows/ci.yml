@@ -6,7 +6,6 @@ on:
 
 env:
   BOOST_VERSION: 1.81.0
-  CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=ON
 
 jobs:
   lint:
@@ -83,7 +82,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     env:
       TOOLSET: mingw
-      CMAKE_FLAGS: -D WINAPI_UTF8_TESTS=OFF
+      SKIP_TESTS: yes
     steps:
       # This is rather stupid. In order to build Doxygen docs, I need a working
       # CMake build directory, so I assume that means I need to pretty much
