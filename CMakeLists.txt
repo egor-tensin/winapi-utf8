@@ -4,6 +4,14 @@ cmake_minimum_required(VERSION 3.30)
 project(winapi_utf8 CXX)
 enable_testing()
 
+if (MSVC)
+    add_compile_options(/MP /W4)
+else()
+    add_compile_options(-Wall -Wextra)
+endif()
+
+add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
+
 file(GLOB_RECURSE winapi_utf8_include CONFIGURE_DEPENDS "include/*.hpp")
 file(GLOB winapi_utf8_src CONFIGURE_DEPENDS "src/*.cpp")
 add_library(winapi_utf8 ${winapi_utf8_include} ${winapi_utf8_src})
