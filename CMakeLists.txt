@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.30)
 project(winapi_utf8 CXX)
 enable_testing()
 
-if (MSVC)
+if(MSVC)
     add_compile_options(/MP /W4)
 else()
     add_compile_options(-Wall -Wextra)
