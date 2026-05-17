@@ -100,6 +100,12 @@ std::wstring widen(const std::string& src) {
     return widen(src.c_str(), src.size());
 }
 
+#ifdef __cpp_lib_char8_t
+std::wstring widen(const std::u8string& src) {
+    return widen(src.c_str(), src.size());
+}
+#endif
+
 std::wstring widen(const void* src, std::size_t in_nb) {
     const DWORD flags = MB_ERR_INVALID_CHARS;
 

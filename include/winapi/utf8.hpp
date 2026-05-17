@@ -22,6 +22,9 @@ static_assert(sizeof(wchar_t) == 2, "This is Windows, right?");
 
 /** Convert UTF-8 string to UTF-16. */
 std::wstring widen(const std::string&);
+#ifdef __cpp_lib_char8_t
+std::wstring widen(const std::u8string&);
+#endif
 
 /**
  * Convert UTF-8 string to UTF-16.
