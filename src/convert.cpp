@@ -80,15 +80,13 @@ void verify_output(const std::vector<CharT>& expected, int32_t _actual_size) {
 
 } // namespace
 
-std::wstring widen(const std::string& src) {
-    return widen(src.c_str(), src.size());
+std::wstring widen(std::string_view src) {
+    return widen(src.data(), src.length());
 }
 
-#ifdef __cpp_lib_char8_t
-std::wstring widen(const std::u8string& src) {
-    return widen(src.c_str(), src.size());
+std::wstring widen(std::u8string_view src) {
+    return widen(src.data(), src.length());
 }
-#endif
 
 std::wstring widen(const void* src, std::size_t in_nb) {
     const DWORD flags = MB_ERR_INVALID_CHARS;
@@ -115,13 +113,13 @@ std::wstring widen(const void* src, std::size_t in_nb) {
     return {out.data(), out.size()};
 }
 
-std::string narrow(const std::wstring& src) {
+std::string narrow(std::wstring_view src) {
     static_assert(sizeof(wchar_t) == sizeof(WCHAR), "wchar_t != WCHAR");
-    return narrow(src.c_str(), src.size() * sizeof(std::wstring::value_type));
+    return narrow(src.data(), src.length() * sizeof(std::wstring_view::value_type));
 }
 
-std::string narrow(const std::u16string& src) {
-    return narrow(src.c_str(), src.size() * sizeof(std::u16string::value_type));
+std::string narrow(std::u16string_view src) {
+    return narrow(src.data(), src.length() * sizeof(std::u16string_view::value_type));
 }
 
 std::string narrow(const void* src, std::size_t in_nb) {

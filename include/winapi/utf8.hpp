@@ -10,9 +10,11 @@
 
 #pragma once
 
+#include <concepts>
 #include <cstddef>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace winapi {
@@ -21,10 +23,8 @@ namespace winapi {
 static_assert(sizeof(wchar_t) == 2, "This is Windows, right?");
 
 /** Convert UTF-8 string to UTF-16. */
-std::wstring widen(const std::string&);
-#ifdef __cpp_lib_char8_t
-std::wstring widen(const std::u8string&);
-#endif
+std::wstring widen(std::string_view);
+std::wstring widen(std::u8string_view);
 
 /**
  * Convert UTF-8 string to UTF-16.
@@ -33,20 +33,24 @@ std::wstring widen(const std::u8string&);
  */
 std::wstring widen(const void* src, std::size_t nb);
 
+template <typename T>
+concept CanBeWidened =
+    std::same_as<T, char> || std::same_as<T, char8_t> || std::same_as<T, unsigned char>;
+
 /**
  * Convert UTF-8 string to UTF-16.
  * \param src Buffer holding a UTF-8 string.
  */
-template <typename T, typename Alloc = std::allocator<T>>
+template <CanBeWidened T, typename Alloc = std::allocator<T>>
 std::wstring widen(const std::vector<T, Alloc>& src) {
     return widen(src.data(), src.size() * sizeof(T));
 }
 
 /** Convert UTF-16 string to UTF-8. */
-std::string narrow(const std::wstring&);
+std::string narrow(std::wstring_view);
 
 /** Convert UTF-16 string to UTF-8. */
-std::string narrow(const std::u16string&);
+std::string narrow(std::u16string_view);
 
 /**
  * Convert UTF-16 string to UTF-8.
@@ -55,11 +59,15 @@ std::string narrow(const std::u16string&);
  */
 std::string narrow(const void* src, std::size_t nb);
 
+template <typename T>
+concept CanBeNarrowed =
+    std::same_as<T, wchar_t> || std::same_as<T, char16_t> || std::same_as<T, unsigned char>;
+
 /**
  * Convert UTF-16 string to UTF-8.
  * \param src Buffer holding a UTF-16 string.
  */
-template <typename T, typename Alloc = std::allocator<T>>
+template <CanBeNarrowed T, typename Alloc = std::allocator<T>>
 std::string narrow(const std::vector<T, Alloc>& src) {
     return narrow(src.data(), src.size() * sizeof(T));
 }
