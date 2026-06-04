@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <format>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -22,14 +23,14 @@ std::runtime_error error(const char* function, DWORD code) {
 }
 
 bool size_t_to_int(std::size_t src, int32_t& dest) {
-    if (src > static_cast<uint32_t>(INT32_MAX))
+    if (src > static_cast<uint32_t>(std::numeric_limits<int32_t>::max()))
         return false;
     dest = static_cast<int32_t>(src);
     return true;
 }
 
 bool int_to_size_t(int32_t src, std::size_t& dest) {
-    if (src < 0 || static_cast<uint32_t>(src) > SIZE_MAX)
+    if (src < 0 || static_cast<uint32_t>(src) > std::numeric_limits<std::size_t>::max())
         return false;
     dest = static_cast<std::size_t>(src);
     return true;
