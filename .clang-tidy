@@ -5,7 +5,7 @@ Checks:
   - clang-diagnostic-*
   - cppcoreguidelines-*
   - modernize-*
-  - -modernize-use-trailing-return-type
   - -modernize-use-nullptr
+  - -modernize-use-trailing-return-type
   - performance-*
 ...
