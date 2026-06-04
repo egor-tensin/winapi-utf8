@@ -9,7 +9,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <sstream>
+#include <format>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -18,9 +18,7 @@ namespace winapi {
 namespace {
 
 std::runtime_error error(const char* function, DWORD code) {
-    std::ostringstream oss;
-    oss << "Function " << function << " failed with error code " << code;
-    return std::runtime_error{oss.str()};
+    return std::runtime_error{std::format("Function {} failed with error code {}", function, code)};
 }
 
 bool size_t_to_int(std::size_t src, int32_t& dest) {
@@ -40,30 +38,21 @@ bool int_to_size_t(int32_t src, std::size_t& dest) {
 int32_t convert_input_bytes_to_bytes(std::size_t nb) {
     int32_t real_nb = 0;
 
-    if (!size_t_to_int(nb, real_nb)) {
-        std::ostringstream oss;
-        oss << "Input buffer is too large at " << nb << " bytes";
-        throw std::runtime_error{oss.str()};
-    }
+    if (!size_t_to_int(nb, real_nb))
+        throw std::runtime_error{std::format("Input buffer is too large at {} bytes", nb)};
 
     return real_nb;
 }
 
 int32_t convert_input_bytes_to_chars(std::size_t nb) {
-    if (nb % sizeof(WCHAR) != 0) {
-        std::ostringstream oss;
-        oss << "Buffer size invalid at " << nb << " bytes";
-        throw std::runtime_error{oss.str()};
-    }
+    if (nb % sizeof(WCHAR) != 0)
+        throw std::runtime_error{std::format("Buffer size invalid at {} bytes", nb)};
 
     const std::size_t nch = nb / sizeof(WCHAR);
     int32_t real_nch = 0;
 
-    if (!size_t_to_int(nch, real_nch)) {
-        std::ostringstream oss;
-        oss << "Input buffer is too large at " << nch << " characters";
-        throw std::runtime_error{oss.str()};
-    }
+    if (!size_t_to_int(nch, real_nch))
+        throw std::runtime_error{std::format("Input buffer is too large at {} characters", nch)};
 
     return real_nch;
 }
@@ -72,11 +61,8 @@ template <typename CharT>
 std::vector<CharT> output_buffer(int32_t size) {
     std::size_t real_size = 0;
 
-    if (!int_to_size_t(size, real_size)) {
-        std::ostringstream oss;
-        oss << "Buffer size invalid at " << size << " bytes";
-        throw std::runtime_error{oss.str()};
-    }
+    if (!int_to_size_t(size, real_size))
+        throw std::runtime_error{std::format("Buffer size invalid at {} bytes", size)};
 
     std::vector<CharT> buffer;
     buffer.resize(real_size);
@@ -87,11 +73,9 @@ template <typename CharT>
 void verify_output(const std::vector<CharT>& expected, int32_t _actual_size) {
     std::size_t actual_size = 0;
 
-    if (!int_to_size_t(_actual_size, actual_size) || expected.size() != actual_size) {
-        std::ostringstream oss;
-        oss << "Expected output length " << expected.size() << ", got " << _actual_size;
-        throw std::runtime_error{oss.str()};
-    }
+    if (!int_to_size_t(_actual_size, actual_size) || expected.size() != actual_size)
+        throw std::runtime_error{
+            std::format("Expected output length {}, got {}", expected.size(), _actual_size)};
 }
 
 } // namespace
