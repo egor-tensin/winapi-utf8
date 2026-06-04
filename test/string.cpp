@@ -74,21 +74,21 @@ BOOST_AUTO_TEST_CASE(null_terminated_narrow) {
         const auto converted = convert(src.data(), 7);
         BOOST_TEST(converted.size() == 7u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 7) == 0);
-        BOOST_TEST(converted.c_str()[3] == '\0');
-        BOOST_TEST(converted.c_str()[7] == '\0');
+        BOOST_TEST(converted[3] == '\0');
+        BOOST_TEST(converted[7] == '\0');
     }
     {
         const auto converted = convert(src.data(), 4);
         BOOST_TEST(converted.size() == 4u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 4) == 0);
-        BOOST_TEST(converted.c_str()[3] == '\0');
-        BOOST_TEST(converted.c_str()[4] == '\0');
+        BOOST_TEST(converted[3] == '\0');
+        BOOST_TEST(converted[4] == '\0');
     }
     {
         const auto converted = convert(src.data(), 3);
         BOOST_TEST(converted.size() == 3u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 3) == 0);
-        BOOST_TEST(converted.c_str()[3] == '\0');
+        BOOST_TEST(converted[3] == '\0');
     }
     {
         const auto converted = convert(src.data());
@@ -110,24 +110,24 @@ BOOST_AUTO_TEST_CASE(null_terminated_wide) {
         const auto converted = convert(src.data(), 8);
         BOOST_TEST(converted.size() == 8u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 8 * sizeof(wchar_t)) == 0);
-        BOOST_TEST(converted.c_str()[0] == L'\0');
-        BOOST_TEST(converted.c_str()[4] == L'\0');
-        BOOST_TEST(converted.c_str()[8] == L'\0');
+        BOOST_TEST(converted[0] == L'\0');
+        BOOST_TEST(converted[4] == L'\0');
+        BOOST_TEST(converted[8] == L'\0');
     }
     {
         const auto converted = convert(src.data(), 5);
         BOOST_TEST(converted.size() == 5u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 5 * sizeof(wchar_t)) == 0);
-        BOOST_TEST(converted.c_str()[0] == L'\0');
-        BOOST_TEST(converted.c_str()[4] == L'\0');
-        BOOST_TEST(converted.c_str()[5] == L'\0');
+        BOOST_TEST(converted[0] == L'\0');
+        BOOST_TEST(converted[4] == L'\0');
+        BOOST_TEST(converted[5] == L'\0');
     }
     {
         const auto converted = convert(src.data(), 4);
         BOOST_TEST(converted.size() == 4u);
         BOOST_TEST(std::memcmp(converted.c_str(), src.data(), 4 * sizeof(wchar_t)) == 0);
-        BOOST_TEST(converted.c_str()[0] == L'\0');
-        BOOST_TEST(converted.c_str()[4] == L'\0');
+        BOOST_TEST(converted[0] == L'\0');
+        BOOST_TEST(converted[4] == L'\0');
     }
     {
         const auto converted = convert(src.data());
