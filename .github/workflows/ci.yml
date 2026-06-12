@@ -4,9 +4,6 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  BOOST_VERSION: 1.81.0
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -34,12 +31,13 @@ jobs:
         platform: [x64, x86]
         configuration: [Debug, RelWithDebInfo]
         include:
+          - boost-version: 1.81.0
           # MinGW builds are done on Linux, since it's more up-to-date there, and
           # it's much faster.
           - {os: ubuntu-latest, toolset: mingw}
           - {os: windows-2022, toolset: vs2022}
-          # At the moment, the 2025 image still has VS 2022.
-          - {os: windows-2025, toolset: vs2022}
+          # Boost supports VS 2026 starting with version 1.91, I think?
+          - {os: windows-2025, toolset: vs2026, boost-version: 1.91.0}
     runs-on: '${{ matrix.os }}'
     name: 'Build: ${{ matrix.os}} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
     defaults:
@@ -49,6 +47,7 @@ jobs:
       TOOLSET: '${{ matrix.toolset }}'
       PLATFORM: '${{ matrix.platform }}'
       CONFIGURATION: '${{ matrix.configuration }}'
+      BOOST_VERSION: '${{ matrix.boost-version }}'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -89,6 +88,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     env:
       TOOLSET: mingw
+      BOOST_VERSION: 1.81.0
       SKIP_TESTS: yes
     steps:
       # This is rather stupid. In order to build Doxygen docs, I need a working
