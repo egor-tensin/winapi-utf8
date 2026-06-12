@@ -17,20 +17,7 @@ endif()
 
 add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 
-file(GLOB_RECURSE winapi_utf8_include CONFIGURE_DEPENDS "include/*.hpp")
-file(GLOB winapi_utf8_src CONFIGURE_DEPENDS "src/*.cpp")
-add_library(winapi_utf8 ${winapi_utf8_include} ${winapi_utf8_src})
-
-target_include_directories(winapi_utf8 PUBLIC include)
-# Vista is the lower bound (due to WC_ERR_INVALID_CHARS):
-if(MINGW)
-    target_compile_definitions(winapi_utf8 PRIVATE
-        NTDDI_VERSION=NTDDI_VISTA
-        _WIN32_WINNT=_WIN32_WINNT_VISTA)
-endif()
-install(TARGETS winapi_utf8 ARCHIVE DESTINATION lib)
-install(DIRECTORY include/winapi DESTINATION include)
-
+add_subdirectory(src)
 if(WINAPI_UTF8_TESTS)
     add_subdirectory(test)
 endif()
