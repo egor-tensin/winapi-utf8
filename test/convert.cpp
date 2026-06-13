@@ -5,8 +5,6 @@
 
 #include <winapi/utf8.hpp>
 
-#include <boost/format.hpp>
-
 // clang-format off
 // The order matters for older Boost versions.
 #include <boost/test/unit_test.hpp>
@@ -14,6 +12,7 @@
 #include <boost/test/data/monomorphic.hpp>
 // clang-format on
 
+#include <format>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -21,7 +20,7 @@
 namespace std {
 
 ostream& operator<<(ostream& os, unsigned char c) {
-    return os << boost::format("%|1$02x|") % static_cast<unsigned int>(c);
+    return os << std::format("{:02x}", static_cast<unsigned int>(c));
 }
 
 ostream& operator<<(ostream& os, const vector<unsigned char>& cs) {
