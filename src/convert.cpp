@@ -76,7 +76,8 @@ void verify_output(const std::vector<CharT>& expected, int32_t _actual_size) {
 
     if (!int_to_size_t(_actual_size, actual_size) || expected.size() != actual_size)
         throw std::runtime_error{
-            std::format("Expected output length {}, got {}", expected.size(), _actual_size)};
+            std::format("Expected output length {}, got {}", expected.size(), _actual_size)
+        };
 }
 
 } // namespace
