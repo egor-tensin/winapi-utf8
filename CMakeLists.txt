@@ -35,5 +35,6 @@ if(DOXYGEN_FOUND)
     doxygen_add_docs(winapi_utf8_docs
         README.md
         ${winapi_utf8_include}
-        ${winapi_utf8_src})
+        ${winapi_utf8_src}
+    )
 endif()

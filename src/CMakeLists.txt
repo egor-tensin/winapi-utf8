@@ -7,7 +7,8 @@ target_include_directories(winapi_utf8 PUBLIC ../include)
 if(MINGW)
     target_compile_definitions(winapi_utf8 PRIVATE
         NTDDI_VERSION=NTDDI_VISTA
-        _WIN32_WINNT=_WIN32_WINNT_VISTA)
+        _WIN32_WINNT=_WIN32_WINNT_VISTA
+    )
 endif()
 install(TARGETS winapi_utf8 ARCHIVE DESTINATION lib)
 install(DIRECTORY ../include/winapi DESTINATION include)
