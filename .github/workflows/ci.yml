@@ -11,7 +11,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
       - name: Set up clang-format
@@ -50,7 +50,7 @@ jobs:
       BOOST_VERSION: '${{ matrix.boost-version }}'
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
       - name: Cache Boost
@@ -96,7 +96,7 @@ jobs:
       # build the project. TODO: research if this is possible without having a
       # Doxyfile.
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
       - name: Set up Python
